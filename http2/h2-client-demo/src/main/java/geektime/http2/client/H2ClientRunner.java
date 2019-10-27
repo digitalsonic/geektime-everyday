@@ -6,6 +6,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -21,11 +22,11 @@ public class H2ClientRunner implements ApplicationRunner {
     @Autowired
     @Qualifier("h2OkHttpClient")
     private OkHttpClient okHttpClient;
+    @Value("${server.url}")
+    private String url;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        String url = args.getOptionValues("url").get(0);
-
         callWithClient(url);
         callWithRestTemplate(url);
     }
